@@ -10,7 +10,7 @@ frequencyBL = 10
 phaseOffsetBL = 0
 amplitudeFL = numpy.pi/4
 frequencyFL = 10
-phaseOffsetFL = numpy.pi/4
+phaseOffsetFL = numpy.pi/2
 physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0,0,-9.8)
