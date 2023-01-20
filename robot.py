@@ -5,21 +5,31 @@ import pybullet_data
 import pybullet as p
 import pyrosim.pyrosim as pyrosim
 import numpy
-
+import time
 
 
 class ROBOT:
 	def __init__(self):
 		self.robotId = p.loadURDF("body.urdf")
 		pyrosim.Prepare_To_Simulate(self.robotId)
-		self.Prepare_To_Sense
+		self.Prepare_To_Sense()
 		self.motors = {}
-
-	def Prepare_To_Sense():
 		self.sensors = {}
+
+	def Prepare_To_Sense(self):
 		for linkName in pyrosim.linkNamesToIndices:
 			self.sensors[linkName] = SENSOR(linkName)
 
-	def Sense():
-		frontLegTouch = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
-		backLegTouch = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
+	def Sense(self, t):
+		for sense in self.sensors:
+			self.sensors[sense].Get_Value(t)
+
+	def Prepare_To_Act(self):
+		for jointName in pyrosim.jointNamesToIndices:
+			self.sensors[linkName] = SENSOR(linkName)
+
+
+	def Act(self):
+		pass
+
+
