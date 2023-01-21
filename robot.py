@@ -29,7 +29,8 @@ class ROBOT:
 			self.sensors[linkName] = SENSOR(linkName)
 
 
-	def Act(self):
-		pass
+	def Act(self, t):
+		for motor in self.motors:
+			self.motors[motor].Set_Value(t)
 
 
