@@ -11,12 +11,11 @@ class MOTOR:
 		self.jointName = jointName
 		self.amplitude = c.amplitude
 		self.frequency = c.frequency
+		print(self.amplitude)
 		self.offset = c.offset
 		self.Prepare_To_Act()
 		self.motorValues = {}
-		#pyrosim.Set_Motor_For_Joint( bodyIndex = robotId, jointName = b'Torso_BackLeg', controlMode = p.POSITION_CONTROL, targetPosition = c.motorCommandBackLeg[x], maxForce = 30)
- 		#pyrosim.Set_Motor_For_Joint( bodyIndex = robotId, jointName = b'Torso_FrontLeg', controlMode = p.POSITION_CONTROL, targetPosition = c.motorCommandFrontLeg[x], maxForce = 30)
-
+		
 
 	def Prepare_To_Act(self, robot):
 		self.amplitude = c.amplitude
