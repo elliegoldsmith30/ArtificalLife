@@ -17,11 +17,14 @@ class MOTOR:
 		
 
 	def Prepare_To_Act(self):
+		if (self.jointName == b'Torso_BackLeg'):
+			self.frequency = c.frequency/2
+		else:
+			self.frequency = c.frequency
 		self.amplitude = c.amplitude
-		self.frequency = c.frequency
 		self.phaseOffset = c.phaseOffset
 		self.motorValues = self.amplitude*numpy.sin(self.frequency*c.x + self.phaseOffset)
-		print(self.motorValues)
+		
 
 
 	def Set_Value(self, robot, t):
