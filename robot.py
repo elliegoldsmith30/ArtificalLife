@@ -10,10 +10,10 @@ import time
 
 class ROBOT:
 	def __init__(self):
-		self.robotId = p.loadURDF("body.urdf")
+		self.robot = p.loadURDF("body.urdf")
 		self.motors = {}
 		self.sensors = {}
-		pyrosim.Prepare_To_Simulate(self.robotId)
+		pyrosim.Prepare_To_Simulate(self.robot)
 		self.Prepare_To_Sense()
 		self.Prepare_To_Act()
 
@@ -27,11 +27,11 @@ class ROBOT:
 
 	def Prepare_To_Act(self):
 		for jointName in pyrosim.jointNamesToIndices:
-			self.sensors[jointName] = SENSOR(jointName)
+			self.motors[jointName] = MOTOR(jointName)
 
 
 	def Act(self, t):
 		for motor in self.motors:
-			self.motors[motor].Set_Value(t)
+			self.motors[motor].Set_Value(self.robot, t)
 
 

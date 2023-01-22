@@ -1,9 +1,9 @@
 import numpy
 
 
-amplitudeBL = numpy.pi/4
-frequencyBL = 10
-phaseOffsetBL = 0
+amplitude = numpy.pi/4
+frequency = 10
+phaseOffset = 0
 amplitudeFL = numpy.pi/4
 frequencyFL = 10
 phaseOffsetFL = 0
