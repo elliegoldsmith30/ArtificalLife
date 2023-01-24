@@ -1,6 +1,7 @@
 from pyrosim.neuron  import NEURON
 
 from pyrosim.synapse import SYNAPSE
+import random
 
 class NEURAL_NETWORK: 
 
