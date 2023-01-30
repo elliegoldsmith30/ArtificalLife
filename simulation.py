@@ -10,7 +10,7 @@ import matplotlib.pylab as plt
 
 class SIMULATION:
 	def __init__(self):
-		physicsClient = p.connect(p.GUI)
+		physicsClient = p.connect(p.DIRECT)
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()
@@ -24,6 +24,8 @@ class SIMULATION:
 			self.robot.Act(x)
 			time.sleep(1/500)
 
+	def Get_Fitness(self):
+		self.robot.Get_Fitness()
 
 	def __del__(self):
 		p.disconnect()

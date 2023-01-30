@@ -1,7 +1,7 @@
 import numpy 
 import pyrosim.pyrosim as pyrosim
 import os
-import SIMULATE
+import random
 
 class SOLUTION:
 	def __init__(self):
@@ -10,20 +10,24 @@ class SOLUTION:
 
 
 	def Evaluate(self):
-		self.Create_World
-		self.Create_Body
-		self.Create_Brain
-		python3 simulate.py
+		self.Create_World()
+		self.Create_Brain()
+		self.Create_Body()
+		os.system("python3 simulate.py")
+		fitnessFile = open("fitness.txt", "r")
+		self.fitness = float((fitnessFile.read()))
+		fitnessFile.close()
 
 
 
-	def Create_World():
+
+	def Create_World(self):
 		pyrosim.Start_SDF("world.sdf")
 		pyrosim.Send_Cube(name = "Box", pos = [2, 2, 0.5], size = [1,1,1])
 		pyrosim.End()
 
 
-	def Create_Body():
+	def Create_Body(self):
 		pyrosim.Start_URDF("body.urdf")
 		pyrosim.Send_Cube(name = "Torso", pos = [1.5, 0, 1.5], size = [1,1,1])
 		pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [1,0,1])
@@ -33,7 +37,7 @@ class SOLUTION:
 		pyrosim.End()
 
 
-	def Create_Brain():
+	def Create_Brain(self):
 		pyrosim.Start_NeuralNetwork("brain.nndf")
 		pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "Torso")
 		pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "BackLeg")
@@ -43,6 +47,13 @@ class SOLUTION:
 		for currentRow in range(3):
 			for currentColumn in range(2):
 				pyrosim.Send_Synapse(sourceNeuronName= currentRow, targetNeuronName= currentColumn + 3, weight= self.weights[currentRow][currentColumn])
+		pyrosim.End()
 
+
+
+	def Mutate(self):
+		randomRow = random.randint(0,2)
+		randomCol = random.randint(0, 1)
+		self.weights[randomRow,randomCol] = random.random()*2 - 1
 
 
