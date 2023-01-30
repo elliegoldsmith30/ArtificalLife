@@ -5,13 +5,16 @@
 # import numpy
 # import random
 # import matplotlib.pylab as plt
+
+import sys
 import constants as c
 from simulation import SIMULATION
 
-simulation = SIMULATION()
+
+directOrGUI = sys.argv[1]
+simulation = SIMULATION(directOrGUI)
 simulation.Run()
 simulation.Get_Fitness()
-
 
 
 

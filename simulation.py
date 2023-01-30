@@ -9,8 +9,11 @@ import random
 import matplotlib.pylab as plt
 
 class SIMULATION:
-	def __init__(self):
-		physicsClient = p.connect(p.DIRECT)
+	def __init__(self, state):
+		if(state == "DIRECT"):
+			physicsClient = p.connect(p.DIRECT)
+		else:
+			physicsClient = p.connect(p.GUI)
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()

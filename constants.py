@@ -7,7 +7,7 @@ phaseOffset = 0
 amplitudeFL = numpy.pi/4
 frequencyFL = 10
 phaseOffsetFL = 0
-numberOfGenerations = 10
+numberOfGenerations = 20
 
 
 backLegSensorValues = numpy.zeros(1000)
