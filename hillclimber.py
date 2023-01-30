@@ -31,6 +31,7 @@ class HILL_CLIMBER:
 			self.parent = self.child
 
 	def Print(self):
+		print("\n")
 		print(self.parent.fitness, self.child.fitness)
 
 
