@@ -7,6 +7,7 @@ import pyrosim.pyrosim as pyrosim
 import numpy
 import time
 import os 
+import constants as c
 
 
 class ROBOT:
@@ -38,9 +39,9 @@ class ROBOT:
 		for neuronName in self.nn.Get_Neuron_Names():
 			if self.nn.Is_Motor_Neuron(neuronName):
 				jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
-				desiredAngle = self.nn.Get_Value_Of(neuronName)
+				desiredAngle = self.nn.Get_Value_Of(neuronName)*c.motorJointRage
 				self.motors[jointName].Set_Value(self.robot, desiredAngle)
-				
+
 	def Get_Fitness(self):
 		stateOfLinkZero = p.getLinkState(self.robot,0)
 		positionOfLinkZero = stateOfLinkZero[0]
