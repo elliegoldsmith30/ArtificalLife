@@ -7,7 +7,6 @@ import time
 class SOLUTION:
 	def __init__(self, ID):
 		self.myID = ID
-		print(self.myID)
 		self.weights = numpy.random.rand(3,2)
 		self.weights = self.weights * 2 - 1
 

@@ -6,8 +6,6 @@ import os
 
 class PARALLEL_HILL_CLIMBER:
 	def __init__(self):
-		os.system("rm brain* .nndf")
-		os.system("rm fitness* nndf")
 		for file in os.listdir("."):
 			if file.startswith("brain") or file.startswith("fitness"):
 				os.system("rm {0}".format(file))
@@ -20,7 +18,6 @@ class PARALLEL_HILL_CLIMBER:
 
 	def Evolve(self):
 		self.Evaluate(self.parents)
-		#self.parent.Evaluate("GUI")
 		for currentGeneration in range(c.numberOfGenerations):
 			self.Evolve_For_One_Generation()
 
@@ -28,7 +25,7 @@ class PARALLEL_HILL_CLIMBER:
 		self.Spawn()
 		self.Mutate()
 		self.Evaluate(self.children)
-		#self.Print()
+		self.Print()
 		self.Select()
 
 
@@ -44,10 +41,10 @@ class PARALLEL_HILL_CLIMBER:
 			self.children[child].Mutate()
 
 	def Evaluate(self, solutions):
-		for x in solutions:
-			solutions[x].Start_Simulation("DIRECT")
-		for x in solutions:
-			solutions[x].Wait_For_Simulation_To_End()
+		for p_size in range(c.populationSize):
+			solutions[p_size].Start_Simulation("DIRECT")
+		for p_size in range(c.populationSize):
+			solutions[p_size].Wait_For_Simulation_To_End()
 
 
 	def Select(self):
@@ -59,7 +56,6 @@ class PARALLEL_HILL_CLIMBER:
 		print("\n")
 		for key in self.parents:
 			print("parent fitness " + str(self.parents[key].fitness) + " child fitness " + str(self.children[key].fitness))
-		#print(self.parent.fitness, self.child.fitness)
 		print("\n")
 
 	def Show_Best(self):
