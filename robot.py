@@ -6,17 +6,20 @@ import pybullet as p
 import pyrosim.pyrosim as pyrosim
 import numpy
 import time
+import os 
 
 
 class ROBOT:
-	def __init__(self):
+	def __init__(self, solutionID):
 		self.robot = p.loadURDF("body.urdf")
 		self.motors = {}
 		self.sensors = {}
-		self.nn = NEURAL_NETWORK("brain.nndf")
+		self.ID = solutionID
+		self.nn = NEURAL_NETWORK("brain" + str(solutionID) + ".nndf")
 		pyrosim.Prepare_To_Simulate(self.robot)
 		self.Prepare_To_Sense()
 		self.Prepare_To_Act()
+		os.system("rm brain" + str(solutionID) + ".nndf")
 
 	def Prepare_To_Sense(self):
 		for linkName in pyrosim.linkNamesToIndices:
@@ -41,8 +44,10 @@ class ROBOT:
 		stateOfLinkZero = p.getLinkState(self.robot,0)
 		positionOfLinkZero = stateOfLinkZero[0]
 		xCoordinateOfLinkZero = positionOfLinkZero[0]
-		f = open("fitness.txt", "w")
+		f = open("tmp" + str(self.ID) + ".txt", "w")
 		f.write(str(xCoordinateOfLinkZero))
+		f.close()
+		os.system("mv tmp" + str(self.ID) + ".txt" + " " + "fitness" + str(self.ID) + ".txt")
 
 	def Think(self):
 		self.nn.Update()

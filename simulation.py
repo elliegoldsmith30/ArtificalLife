@@ -9,7 +9,8 @@ import random
 import matplotlib.pylab as plt
 
 class SIMULATION:
-	def __init__(self, state):
+	def __init__(self, state, solutionID):
+		self.directOrGUI = state
 		if(state == "DIRECT"):
 			physicsClient = p.connect(p.DIRECT)
 		else:
@@ -17,7 +18,7 @@ class SIMULATION:
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()
-		self.robot = ROBOT()
+		self.robot = ROBOT(solutionID)
 
 	def Run(self):
 		for x in range(200):
@@ -25,7 +26,8 @@ class SIMULATION:
 			self.robot.Sense(x)
 			self.robot.Think()
 			self.robot.Act(x)
-			time.sleep(1/500)
+			if (self.directOrGUI == "GUI"):
+				time.sleep(1/200)
 
 	def Get_Fitness(self):
 		self.robot.Get_Fitness()
