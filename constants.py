@@ -9,8 +9,8 @@ frequencyFL = 10
 phaseOffsetFL = 0
 numberOfGenerations = 10
 populationSize = 10
-numSensorNeurons = 9
-numMotorNeurons = 4
+numSensorNeurons = 5
+numMotorNeurons = 8
 motorJointRage = 0.2
 
 
