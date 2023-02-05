@@ -42,13 +42,12 @@ class ROBOT:
 				desiredAngle = self.nn.Get_Value_Of(neuronName)*c.motorJointRage
 				self.motors[jointName].Set_Value(self.robot, desiredAngle)
 
-	def Get_Fitness(self):
-
-		basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
-		basePosition = basePositionAndOrientation[0]
-		xPosition = basePosition[0]
+	def Get_Fitness(self, yPosition):
+	#	basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
+	#	basePosition = basePositionAndOrientation[0]
+	#	xPosition = basePosition[0]
 		f = open("tmp" + str(self.ID) + ".txt", "w")
-		f.write(str(xPosition))
+		f.write(str(yPosition))
 		f.close()
 		os.system("mv tmp" + str(self.ID) + ".txt" + " " + "fitness" + str(self.ID) + ".txt")
 

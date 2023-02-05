@@ -30,7 +30,7 @@
         <visual>
             <origin xyz="0 0 0.25" rpy="0 0 0"/>
             <geometry>
-                <box size="0.4 0.4 0.5" />
+                <box size="0.4 0.4 0.4" />
             </geometry>
             <material name="Cyan">
                 <color rgba="0 1.0 1.0 1.0"/>
@@ -39,7 +39,7 @@
         <collision>
             <origin xyz="0 0 0.25" rpy="0 0 0"/>
             <geometry>
-                <box size="0.4 0.4 0.5" />
+                <box size="0.4 0.4 0.4" />
             </geometry>
         </collision>
     </link>
@@ -105,6 +105,122 @@
        <parent link="Torso"/>
        <child  link="RightLeg"/>
        <origin rpy="0 0 0" xyz="0.375 0 1.25" />
+     <axis xyz="1 0 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+    <link name="LeftShoulder">
+        <inertial>
+            <origin xyz="-0.15 0 0" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="-0.15 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.3 0.4 0.2" />
+            </geometry>
+            <material name="Cyan">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="-0.15 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.3 0.4 0.2" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="Torso_LeftShoulder" type="revolute">
+       <parent link="Torso"/>
+       <child  link="LeftShoulder"/>
+       <origin rpy="0 0 0" xyz="-0.2 0 2.05" />
+     <axis xyz="1 0 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+    <link name="RightShoulder">
+        <inertial>
+            <origin xyz="0.15 0 0" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="0.15 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.3 0.4 0.2" />
+            </geometry>
+            <material name="Cyan">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.15 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.3 0.4 0.2" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="Torso_RightShoulder" type="revolute">
+       <parent link="Torso"/>
+       <child  link="RightShoulder"/>
+       <origin rpy="0 0 0" xyz="0.2 0 2.05" />
+     <axis xyz="1 0 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+    <link name="LeftArm">
+        <inertial>
+            <origin xyz="-0.1 0 -0.3" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="-0.1 0 -0.3" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.4 0.6" />
+            </geometry>
+            <material name="Cyan">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="-0.1 0 -0.3" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.4 0.6" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="LeftShoulder_LeftArm" type="revolute">
+       <parent link="LeftShoulder"/>
+       <child  link="LeftArm"/>
+       <origin rpy="0 0 0" xyz="-0.3 0 0" />
+     <axis xyz="1 0 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+    <link name="RightArm">
+        <inertial>
+            <origin xyz="0.1 0 -0.3" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="0.1 0 -0.3" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.4 0.6" />
+            </geometry>
+            <material name="Cyan">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.1 0 -0.3" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.4 0.6" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="RightShoulder_RightArm" type="revolute">
+       <parent link="RightShoulder"/>
+       <child  link="RightArm"/>
+       <origin rpy="0 0 0" xyz="0.3 0 0" />
      <axis xyz="1 0 0"/>
        <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
     </joint>

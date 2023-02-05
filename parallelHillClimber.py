@@ -2,6 +2,7 @@ from solution import SOLUTION
 import constants as c
 import copy
 import os 
+import numpy
 
 
 class PARALLEL_HILL_CLIMBER:
@@ -49,7 +50,7 @@ class PARALLEL_HILL_CLIMBER:
 
 	def Select(self):
 		for x in self.parents:
-			if(self.parents[x].fitness > self.children[x].fitness):
+			if(self.parents[x].fitness < self.children[x].fitness):
 				self.parents[x] = self.children[x]
 
 	def Print(self):
@@ -58,10 +59,14 @@ class PARALLEL_HILL_CLIMBER:
 			print("parent fitness " + str(self.parents[key].fitness) + " child fitness " + str(self.children[key].fitness))
 		print("\n")
 
+	def Show_Random(self):
+		randomRobot = numpy.random.randint(0,len(self.parents))
+		self.parents[randomRobot].Start_Simulation("GUI")
+
 	def Show_Best(self):
 		best = 0
 		for x in self.parents:
-			if(self.parents[x].fitness < self.parents[best].fitness):
+			if(self.parents[x].fitness > self.parents[best].fitness):
 				best = x
 		self.parents[x].Start_Simulation("GUI")
 
