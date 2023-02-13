@@ -14,8 +14,8 @@ class SOLUTION:
 
 	def Evaluate(self, state):
 		self.Create_World()
-		self.Create_Brain()
 		self.Create_Body()
+		self.Create_Brain()
 		self.file = "python3 simulate.py " + state +" " + str(self.myID) + "2&>1 &"
 		os.system(self.file)
 		while not os.path.exists(fitnessFileName):
@@ -27,8 +27,8 @@ class SOLUTION:
 
 	def Start_Simulation(self, state):
 		self.Create_World()
-		self.Create_Brain()
 		self.Create_Body()
+		self.Create_Brain()
 		self.file = "python3 simulate.py " + state +" " + str(self.myID) + "&"
 		os.system(self.file)
 
@@ -121,6 +121,7 @@ class SOLUTION:
 			if(self.sensorOrNot[c] == 0):
 				for d in range(self.totalNum):
 					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + numSensor, weight= self.weights[c][d])
+					#print(self.weights[c][d])
 
 			
 
