@@ -4,7 +4,8 @@ Random number of randomly shaped links with random sensor placement along the ch
 
 In order to determine which links have sensors, every time a link is generated, a random number either 0 or 1 is generated and if the number is 0, the link will have a sensor and if the number is 1, the link will not have a sensor.
 
-<img width="609" alt="Screen Shot 2023-02-13 at 11 20 55 AM" src="https://user-images.githubusercontent.com/92822567/218527464-03ba63b9-6c58-4b97-a72a-f34ee0811a3b.png">
+<img width="678" alt="Screen Shot 2023-02-13 at 11 29 45 AM" src="https://user-images.githubusercontent.com/92822567/218529567-aa1afdc9-191c-49d5-acf1-e722e085c3d5.png">
+
 
 
 Installation: Use the instructions from the first part of r/ludobots to download python3, pip, and other packages needed.
