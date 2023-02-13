@@ -7,8 +7,7 @@ import constants as c
 class SOLUTION:
 	def __init__(self, ID):
 		self.myID = ID
-		self.weights = numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons)
-		self.weights = self.weights * 2 - 1
+		self.weights = {}
 		self.totalNum = 0
 		self.sensorOrNot = {}
 
@@ -82,8 +81,10 @@ class SOLUTION:
 			newposJoint = sizex
 			if(self.sensorOrNot[x] == 0):
 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [newposCube, 0, 0.5], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+				#print("Link" + str(x))
 			else:
 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [newposCube, 0, 0.5], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+				#print("Link" + str(x))
 			if (x != self.totalNum):
 				pyrosim.Send_Joint(name = "Link" + str(x) + "_Link" + str(x+1), parent = "Link" + str(x), child = "Link" + str(x+1), type = "revolute", position = [newposJoint, 0 ,0], jointAxis = "1 0 0")
 
@@ -96,19 +97,32 @@ class SOLUTION:
 		# links without sensors are blue
 		#green is a 0
 		# blue is a 1
+		## 0 HAS SENSORS
+		self.weights = numpy.random.rand(self.totalNum,self.totalNum)
+		self.weights = self.weights * 2 - 1
+
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
-		print("hello")
 		a = 0
+		numSensor = 0
 		for i in range(self.totalNum):
 			if (self.sensorOrNot[i] == 0):
 				pyrosim.Send_Sensor_Neuron(name = a , linkName = "Link" + str(i))
 				a = a + 1
+				numSensor = numSensor + 1
 		
 
 		for b in range(self.totalNum):
-			if(b != self.totalNum):
+			if(b != self.totalNum-1):
 				pyrosim.Send_Motor_Neuron(name = a, jointName = "Link" + str(b) + "_Link" + str(b+1))
 				a = a + 1
+
+
+		for c in range(numSensor):
+			if(self.sensorOrNot[c] == 0):
+				for d in range(self.totalNum):
+					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + numSensor, weight= self.weights[c][d])
+
+			
 
 		pyrosim.End()
 
