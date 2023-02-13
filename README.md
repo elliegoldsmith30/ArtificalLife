@@ -10,7 +10,7 @@ In order to determine which links have sensors, every time a link is generated, 
 
 Installation: Use the instructions from the first part of r/ludobots to download python3, pip, and other packages needed.
 
-Running the Code: Open the terminal (for Mac users) and go to the directory containing the folder with the code files. Run the code by typing "python3 search.py" into the command window on terminal and the simulation should run beginning with a random robot showing and then parent and child fitnesses will display and it will end by simulating the best (evolved) robot.
+Running the Code: Open the terminal (for Mac users) and go to the directory containing the folder with the code files. Run the code by typing "python3 search.py" into the command window on terminal and the simulation should run with a random snake. Run "python3 search.py" multiple times to see various randomized snakes.
 
 Citation: Instructions taken from r/ludobots and code from pyrosim is used. Northwestern CS396 - Winter 2023 (Artificial Life)
 
