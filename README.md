@@ -4,7 +4,7 @@ Random number of randomly shaped links with random sensor placement along the ch
 
 In order to determine which links have sensors, every time a link is generated, a random number either 0 or 1 is generated and if the number is 0, the link will have a sensor and if the number is 1, the link will not have a sensor.
 
-<img width="678" alt="Screen Shot 2023-02-13 at 11 29 45 AM" src="https://user-images.githubusercontent.com/92822567/218529567-aa1afdc9-191c-49d5-acf1-e722e085c3d5.png">
+<img width="492" alt="Screen Shot 2023-02-13 at 2 24 01 PM" src="https://user-images.githubusercontent.com/92822567/218566885-471c2a48-78aa-4506-af45-e0a4ad8a5e6a.png">
 
 
 
