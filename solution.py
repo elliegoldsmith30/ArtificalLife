@@ -11,6 +11,7 @@ class SOLUTION:
 		self.totalNum = 0
 		self.sensorOrNot = {}
 		self.links = {}
+		self.jointP = {}
 
 
 	def Evaluate(self, state):
@@ -53,15 +54,13 @@ class SOLUTION:
 
 	def Create_Body(self):
 		pyrosim.Start_URDF("body.urdf")
-		#self.totalNum = numpy.random.randint(5,15)
-		self.totalNum = 2
+		self.totalNum = numpy.random.randint(5,15)
 		sizex = numpy.random.rand()+0.1
 		sizey = numpy.random.rand()+0.1
 		sizez = numpy.random.rand()+0.1
 		self.sensorOrNot[0] = numpy.random.randint(0,2)
 		#pyrosim.Send_Joint(name = "Link0_Link1", parent = "Link0", child = "Link1", type = "revolute", position = [-1+sizex/2, 0 ,0], jointAxis = "1 0 0")
 		self.links[0] = [sizex, sizey, sizez, 0,0,0,0, 0]
-		print(self.links)
 		if (self.sensorOrNot[0] == 0):
 			pyrosim.Send_Cube(name = "Link0", pos = [-1, 0, 0.5], size = [sizex, sizey, sizez], color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
 		else:
@@ -74,78 +73,208 @@ class SOLUTION:
 			sizex = numpy.random.rand()+ 0.1
 			sizey = numpy.random.rand() + 0.1
 			sizez = numpy.random.rand() + 0.1
-			loc = numpy.random.randint(0,4)
+			loc = numpy.random.randint(0,5)
 			
 			while(self.links[i][loc + 3] != 0):
 				loc = numpy.random.randint(0,4)
 
 
 			self.sensorOrNot[x] = numpy.random.randint(0,2)
-			self.links[x] = [sizex, sizey, sizez, 0,0,0,0]
-			
+			self.links[x] = [sizex, sizey, sizez, 0,0,0,0, 0]
+
+			# 3 = "right"
+			# 4= "left"
+			# 5 = "forward"
+			# 6 = "back"
+			# 7 = "up"
+
 			if (loc == 0):
+				#Joint
 				if(i == 0):
+					self.jointP[0] = "right"
 					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-1+self.links[i][0]/2, 0 ,0.5], jointAxis = "1 0 0")
 				else:
-					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [self.links[i][0], 0 ,0], jointAxis = "1 0 0")
+					self.jointP[i] = "right"
+					newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+				#Cube
 				if(self.sensorOrNot[x] == 0):
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
 				else:
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
 
-				self.links[x][3] = 1
+				self.links[x][4] = 1
 
 			elif (loc == 1):
+				#Joint
 				if(i == 0):
 					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-1 - self.links[i][0]/2, 0 ,0.5], jointAxis = "1 0 0")
+					self.jointP[0] = "left"
 				else:
-					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-self.links[i][0], 0 ,0], jointAxis = "1 0 0")
+					self.jointP[i] = "left"
+					newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+				#Cube
 				if(self.sensorOrNot[x] == 0):
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [-sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
 				else:
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [-sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
 
-				self.links[x][4] = 1
+				self.links[x][3] = 1
+
 			elif (loc == 2):
+				#Joint
 				if(i ==0):
+					self.jointP[0] = "forward"
 					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-1, self.links[i][1]/2 ,0.5], jointAxis = "1 0 0")
-
 				else:
-					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [0, self.links[i][1] ,0], jointAxis = "1 0 0")
-				if(self.sensorOrNot[x] == 0):
-					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
-				else:
-					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
-
-				self.links[x][5] = 1
-			elif (loc == 3):
-				if(i == 0):
-					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-1, -self.links[i][1]/2 ,0.5], jointAxis = "1 0 0")
-
-				else:
-					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [0, -self.links[i][1] ,0], jointAxis = "1 0 0")
-
+					self.jointP[i] = "forward"
+					newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+				#Cube
 				if(self.sensorOrNot[x] == 0):
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, -sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
 				else:
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, -sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
 
 				self.links[x][6] = 1
+
+
+			elif (loc == 3):
+				#Joint
+				if(i == 0):
+					self.jointP[0] = "back"
+					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-1, -self.links[i][1]/2 ,0.5], jointAxis = "1 0 0")
+				else:
+					self.jointP[i] = "back"
+					newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+
+
+				#Cube
+				if(self.sensorOrNot[x] == 0):
+					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+				else:
+					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+
+				self.links[x][5] = 1
+
+
 			else:
+				#Joint
 				if (i == 0):
+					self.jointP[0] = "up"
 					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [-1, 0, 0.5 + self.links[i][2]/2], jointAxis = "1 0 0")
 
 				else:
-					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = [0, 0 , self.links[i][2]], jointAxis = "1 0 0")
+					self.jointP[i] = "up"
+					newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+					
+					pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+
+				#Cube
 				if(self.sensorOrNot[x] == 0):
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, 0, sizez/2], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
 				else:
 					pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, 0, sizez/2], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
 
-				self.links[x][7] = 1
-
-
 		pyrosim.End()
+
+
+
+
+	def new_Joint_Pos(self, olddir, newdir, size):
+		print(olddir)
+		print(newdir)
+		print(size)
+		if(olddir == newdir):
+			if(olddir == "left"):
+				result = [-size[0], 0, 0]
+				return result
+			if(olddir == "right"):
+				result = [size[0], 0, 0]
+				return result
+
+			if (olddir == "up"):
+				result =  [0, 0, size[2]]
+				return result
+
+			if(olddir == "back"):
+				result = [0, size[1], 0]
+				return result
+
+			if(olddir == "forward"):
+				result = [0, -size[1], 0]
+				return result
+
+		elif(olddir == "left"):
+			if(newdir == "forward"):
+				result = [-size[0]/2, -size[1]/2, 0]
+				return result
+			if(newdir == "back"):
+				result = [-size[0]/2, size[1]/2, 0]
+				return result
+			if(newdir == "up"):
+				result = [-size[0]/2, 0, size[2]/2]
+				return result
+
+
+		elif(olddir == "right"):
+			if(newdir == "up"):
+				result =  [size[0]/2, 0, size[2]/2]
+				return result
+			if(newdir == "forward"):
+				result = [size[0]/2, -size[1]/2, 0]
+				return result
+			if(newdir == "back"):
+				result = [size[0]/2, size[1]/2, 0]
+				return result
+
+
+		elif(olddir == "up"):
+			if(newdir == "left"):
+				result =  [-size[0]/2, 0, size[2]/2]
+				return result
+			if(newdir == "right"):
+				result = [size[0]/2, 0, size[2]/2]
+				return result
+			if(newdir == "forward"):
+				result = [0, -size[1]/2, size[2]/2]
+				return result
+			if(newdir == "back"):
+				result = [0, size[1]/2 ,size[2]/2]
+				return result
+
+
+		elif(olddir == "forward"):
+			if(newdir == "left"):
+				result = [-size[0]/2, -size[1]/2, 0]
+				return result
+			if(newdir == "right"):
+				result = [size[0]/2, -size[1]/2, 0]
+				return result
+			if(newdir == "up"):
+				result = [0, -size[1]/2, size[2]/2]
+				return result
+
+
+		elif(olddir == "back"):
+			if(newdir == "left"):
+				result = [-size[0]/2, size[1]/2, 0]
+				return result
+			if(newdir == "right"):
+				result = [size[0]/2, size[1]/2, 0]
+				return result
+			if(newdir == "up"):
+				result = [0, size[1]/2 ,size[2]/2]
+				return result
+
+
+
 
 
 
