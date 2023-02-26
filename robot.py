@@ -8,6 +8,7 @@ import numpy
 import time
 import os 
 import constants as c
+import math
 
 
 class ROBOT:
@@ -42,12 +43,13 @@ class ROBOT:
 				desiredAngle = self.nn.Get_Value_Of(neuronName)*c.motorJointRage
 				self.motors[jointName].Set_Value(self.robot, desiredAngle)
 
-	def Get_Fitness(self, yPosition):
+	def Get_Fitness(self, xPosition, yPosition):
 	#	basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
 	#	basePosition = basePositionAndOrientation[0]
 	#	xPosition = basePosition[0]
+		fitnessVal = math.sqrt(((xPosition +  1) * (xPosition + 1)) + (yPosition * yPosition))
 		f = open("tmp" + str(self.ID) + ".txt", "w")
-		f.write(str(yPosition))
+		f.write(str(fitnessVal))
 		f.close()
 		os.system("mv tmp" + str(self.ID) + ".txt" + " " + "fitness" + str(self.ID) + ".txt")
 

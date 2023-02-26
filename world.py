@@ -10,7 +10,8 @@ class WORLD:
 	def Get_Pos(self, num):
 		posAndOrientation = p.getBasePositionAndOrientation(self.objects[0])
 		position = posAndOrientation[0]
-		xPosition = position[0]
-		yPosition = position[1]
-		height = position[2]
-		return(yPosition)
+		return(position[num])
+		# xPosition = position[0]
+		# yPosition = position[1]
+		# height = position[2]
+		# return(yPosition)

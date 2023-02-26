@@ -12,6 +12,7 @@ class SOLUTION:
 		self.sensorOrNot = {}
 		self.links = {}
 		self.jointP = {}
+		self.numSensor = 0
 
 
 	def Evaluate(self, state):
@@ -54,7 +55,7 @@ class SOLUTION:
 
 	def Create_Body(self):
 		pyrosim.Start_URDF("body.urdf")
-		self.totalNum = numpy.random.randint(5,15)
+		self.totalNum = numpy.random.randint(3,10)
 		sizex = numpy.random.rand()+0.1
 		sizey = numpy.random.rand()+0.1
 		sizez = numpy.random.rand()+0.1
@@ -188,9 +189,9 @@ class SOLUTION:
 
 
 	def new_Joint_Pos(self, olddir, newdir, size):
-		print(olddir)
-		print(newdir)
-		print(size)
+	#	print(olddir)
+	#	print(newdir)
+	#	print(size)
 		if(olddir == newdir):
 			if(olddir == "left"):
 				result = [-size[0], 0, 0]
@@ -336,12 +337,12 @@ class SOLUTION:
 
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
 		a = 0
-		numSensor = 0
+		self.numSensor = 0
 		for i in range(self.totalNum):
 			if (self.sensorOrNot[i] == 0):
 				pyrosim.Send_Sensor_Neuron(name = a , linkName = "Link" + str(i))
 				a = a + 1
-				numSensor = numSensor + 1
+				self.numSensor = self.numSensor + 1
 		
 
 		for b in range(self.totalNum):
@@ -350,10 +351,10 @@ class SOLUTION:
 				a = a + 1
 
 
-		for c in range(numSensor):
+		for c in range(self.numSensor):
 			if(self.sensorOrNot[c] == 0):
 				for d in range(self.totalNum):
-					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + numSensor, weight= self.weights[c][d])
+					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + self.numSensor, weight= self.weights[c][d])
 					#print(self.weights[c][d])
 
 			
@@ -362,15 +363,117 @@ class SOLUTION:
 
 
 
-
-
 	def Mutate(self):
-		randomRow = random.randint(0,c.numSensorNeurons - 1)
-		randomCol = random.randint(0, c.numMotorNeurons - 1)
-		self.weights[randomRow,randomCol] = random.random()*2 - 1
+		change = numpy.random.randint(0,2)
+		# if (change == 0):
+		# 	self.Add_Block()
+		# else:
+		# 	self.Brain_Mutate()
+		self.Brain_Mutate()
+	
 
 	def Set_ID(self, ID):
 		self.ID = ID
+
+
+
+	def Brain_Mutate(self):
+		randomRow = random.randint(0,self.numSensor- 1)
+		randomCol = random.randint(0, self.totalNum- 1)
+		self.weights[randomRow,randomCol] = random.random()*2 - 1
+
+
+# 	def Add_Block(self):
+# 		x = self.totalNum + 1
+# 		self.totalNum = self.totalNum + 1
+# 		loc = numpy.random.randint(0,5)
+# 		while(self.links[i][loc + 3] != 0):
+# 			loc = numpy.random.randint(0,4)
+# 		newSensor = numpy.random.randint(0,2)
+# 		if(newSensor == 0):
+# 			self.numSensor = self.numSensor + 1
+# 			for a in range(self.totalNum):
+# 				self.weights[self.numSensor][a] = numpy.random.randint(0,2)
+# 			for b in range(self.numSensor):
+# 				self.weights[b][self.totalNum] = numpy.random.randint(0,2)
+# 		else:
+# 			for a in range(self.totalNum):
+# 				self.weights[self.numSensor][a] = numpy.random.randint(0,2)
+# 		for a in range(self.totalNum)
+		
+# 		self.sensorOrNot[x] = newSensor
+# 		self.links[x] = [sizex, sizey, sizez, 0,0,0,0, 0]
+# 		if (loc == 0):
+# 			self.jointP[i] = "right"
+# 			newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+# 			pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+# 			if(self.sensorOrNot[x] == 0):
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+# 			else:
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+# 			self.links[x][4] = 1
+
+# 		elif (loc == 1):
+# 			self.jointP[i] = "left"
+# 			newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+# 			pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+# 				#Cube
+# 			if(self.sensorOrNot[x] == 0):
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [-sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+# 			else:
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [-sizex/2, 0, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+# 			self.links[x][3] = 1
+
+# 		elif (loc == 2):
+# 			self.jointP[i] = "forward"
+# 			newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+# 			pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+# 			if(self.sensorOrNot[x] == 0):
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, -sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+# 			else:
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, -sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+
+# 			self.links[x][6] = 1
+
+
+# 		elif (loc == 3):
+# 			self.jointP[i] = "back"
+# 			newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])
+# 			pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+			
+# 			if(self.sensorOrNot[x] == 0):
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+# 			else:
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, sizey/2, 0], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+# 			self.links[x][5] = 1
+
+
+# 		else:
+# 			self.jointP[i] = "up"
+# 			newPos = self.new_Joint_Pos(self.jointP[i-1], self.jointP[i], [self.links[i][0], self.links[i][1], self.links[i][2]])		
+# 			pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(x), parent = "Link" + str(i), child = "Link" + str(x), type = "revolute", position = newPos, jointAxis = "1 0 0")
+				
+# 			if(self.sensorOrNot[x] == 0):
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, 0, sizez/2], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 0 1.0"/>', colorName = '<material name="Green">')
+# 			else:
+# 				pyrosim.Send_Cube(name = "Link" + str(x), pos = [0, 0, sizez/2], size = [sizex, sizey, sizez],  color = '    <color rgba="0 1.0 1.0 1.0"/>', colorName = '<material name="Cyan">')
+
+
+
+# 		if(newSensor == 0):
+# 			for d in range(self.totalNum):
+# 				pyrosim.Send_Synapse(sourceNeuronName= self.numSensor-1, targetNeuronName= d + self.numSensor, weight= self.weights[c][d])
+
+
+# for c in range(self.numSensor):
+# 			if(self.sensorOrNot[c] == 0):
+# 				for d in range(self.totalNum):
+# 					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + numSensor, weight= self.weights[c][d])
+# 					#print(self.weights[c][d])
+
+
 
 
 
