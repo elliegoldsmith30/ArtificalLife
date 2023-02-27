@@ -255,10 +255,11 @@ class SOLUTION:
 	def Mutate(self):
 		change = numpy.random.randint(0,2)
 		if (change == 0):
+			print("Adding block")
 			self.Add_Block()
 		else:
-			#self.Brain_Mutate()
-			self.Add_Block()
+			self.Brain_Mutate()
+			print("changing brain")
 	
 	def Set_ID(self, ID):
 		self.ID = ID
@@ -271,9 +272,6 @@ class SOLUTION:
 		self.weights[randomRow,randomCol] = random.random()*2 - 1
 
 	def Add_Block(self):
-
-		print("before")
-		print(self.weights)
 		x = self.totalNum + 1
 		self.totalNum = self.totalNum + 1
 
