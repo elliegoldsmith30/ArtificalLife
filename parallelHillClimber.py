@@ -8,7 +8,7 @@ import matplotlib.pyplot
 class PARALLEL_HILL_CLIMBER:
 	def __init__(self):
 		for file in os.listdir("."):
-			if file.startswith("brain") or file.startswith("fitness"):
+			if (file.startswith("brain") or file.startswith("fitness")) or file.startswith("body"):
 				os.system("rm {0}".format(file))
 		self.parents = {}
 		self.nextAvailableID = 0
@@ -89,6 +89,7 @@ class PARALLEL_HILL_CLIMBER:
 			if(self.parents[x].fitness > self.parents[best].fitness):
 				best = x
 		self.parents[best].Start_Simulation("GUI")
+
 
 
 

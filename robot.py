@@ -47,7 +47,11 @@ class ROBOT:
 	#	basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
 	#	basePosition = basePositionAndOrientation[0]
 	#	xPosition = basePosition[0]
-		fitnessVal = math.sqrt(((xPosition +  1) * (xPosition + 1)) + (yPosition * yPosition))
+		stateOfLinkZero = p.getLinkState(self.robot,0)
+		positionOfLinkZero = stateOfLinkZero[0]
+		x = positionOfLinkZero[0]
+		y = positionOfLinkZero[1]
+		fitnessVal = math.sqrt(((x +  1) * (x + 1)) + (y * y))
 		f = open("tmp" + str(self.ID) + ".txt", "w")
 		f.write(str(fitnessVal))
 		f.close()

@@ -387,6 +387,7 @@ class SOLUTION:
 # 	def Add_Block(self):
 # 		x = self.totalNum + 1
 # 		self.totalNum = self.totalNum + 1
+
 # 		loc = numpy.random.randint(0,5)
 # 		while(self.links[i][loc + 3] != 0):
 # 			loc = numpy.random.randint(0,4)
