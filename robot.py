@@ -22,6 +22,7 @@ class ROBOT:
 		self.Prepare_To_Sense()
 		self.Prepare_To_Act()
 		#os.system("rm brain" + str(solutionID) + ".nndf")
+		#os.system("rm body" + str(solutionID) + ".urdf")
 
 	def Prepare_To_Sense(self):
 		for linkName in pyrosim.linkNamesToIndices:

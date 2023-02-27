@@ -35,11 +35,11 @@ class PARALLEL_HILL_CLIMBER:
 
 	def Save_Fitness_File(self):
 		matplotlib.pyplot.plot(self.fitnessVal)
+		#show plot
 		numpy.save("fitnessValues.npy", self.fitnessVal)
 		fF = open("fitnessValues.txt", "w")
 		fF.write(str(self.fitnessVal))
 		fF.close()
-
 
 
 	def Evolve_For_One_Generation(self):
