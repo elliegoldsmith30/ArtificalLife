@@ -1,6 +1,6 @@
 import numpy
 import matplotlib.pyplot
-backLegSensorValues = numpy.load("data/backLegSensorValues.npy")
+fitnessValue = numpy.load("data")
 print(backLegSensorValues)
 frontLegSensorValues = numpy.load("data/frontLegSensorValues.npy")
 motorCommandBackLeg = numpy.load("data/motorCommandBackLeg.npy")

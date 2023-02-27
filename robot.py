@@ -13,7 +13,7 @@ import math
 
 class ROBOT:
 	def __init__(self, solutionID):
-		self.robot = p.loadURDF("body.urdf")
+		self.robot = p.loadURDF("body" + str(solutionID) + ".urdf")
 		self.motors = {}
 		self.sensors = {}
 		self.ID = solutionID

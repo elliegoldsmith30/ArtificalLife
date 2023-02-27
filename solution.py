@@ -54,7 +54,7 @@ class SOLUTION:
 
 
 	def Create_Body(self):
-		pyrosim.Start_URDF("body.urdf")
+		pyrosim.Start_URDF("body" + str(self.myID) + ".urdf")
 		self.totalNum = numpy.random.randint(3,10)
 		sizex = numpy.random.rand()+0.1
 		sizey = numpy.random.rand()+0.1
@@ -332,12 +332,12 @@ class SOLUTION:
 		#green is a 0
 		# blue is a 1
 		## 0 HAS SENSORS
+		self.numSensor = 0
 		self.weights = numpy.random.rand(self.totalNum,self.totalNum)
 		self.weights = self.weights * 2 - 1
 
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
 		a = 0
-		self.numSensor = 0
 		for i in range(self.totalNum):
 			if (self.sensorOrNot[i] == 0):
 				pyrosim.Send_Sensor_Neuron(name = a , linkName = "Link" + str(i))
@@ -349,7 +349,6 @@ class SOLUTION:
 			if(b != self.totalNum-1):
 				pyrosim.Send_Motor_Neuron(name = a, jointName = "Link" + str(b) + "_Link" + str(b+1))
 				a = a + 1
-
 
 		for c in range(self.numSensor):
 			if(self.sensorOrNot[c] == 0):
@@ -378,6 +377,8 @@ class SOLUTION:
 
 
 	def Brain_Mutate(self):
+		if(self.numSensor < 2):
+			return
 		randomRow = random.randint(0,self.numSensor- 1)
 		randomCol = random.randint(0, self.totalNum- 1)
 		self.weights[randomRow,randomCol] = random.random()*2 - 1

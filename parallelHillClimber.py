@@ -3,7 +3,7 @@ import constants as c
 import copy
 import os 
 import numpy
-
+import matplotlib.pyplot
 
 class PARALLEL_HILL_CLIMBER:
 	def __init__(self):
@@ -15,12 +15,32 @@ class PARALLEL_HILL_CLIMBER:
 		for x in range(c.populationSize):
 			self.parents[x] = SOLUTION(self.nextAvailableID)
 			self.nextAvailableID = self.nextAvailableID + 1
+		self.fitnessVal = numpy.zeros(c.numberOfGenerations)
+		self.currentGen = 0
 
 
 	def Evolve(self):
 		self.Evaluate(self.parents)
 		for currentGeneration in range(c.numberOfGenerations):
 			self.Evolve_For_One_Generation()
+			self.Save_Fitness()
+
+	def Save_Fitness(self):
+		best = 0
+		for x in self.parents:
+			if(self.parents[x].fitness > self.parents[best].fitness):
+				best = x
+		self.fitnessVal[self.currentGen] = self.parents[best].fitness
+		self.currentGen = self.currentGen + 1
+
+	def Save_Fitness_File(self):
+		matplotlib.pyplot.plot(self.fitnessVal)
+		numpy.save("fitnessValues.npy", self.fitnessVal)
+		fF = open("fitnessValues.txt", "w")
+		fF.write(str(self.fitnessVal))
+		fF.close()
+
+
 
 	def Evolve_For_One_Generation(self):
 		self.Spawn()
