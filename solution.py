@@ -244,9 +244,9 @@ class SOLUTION:
 			if(b != self.totalNum):
 				pyrosim.Send_Motor_Neuron(name = a, jointName = "Link" + str(b) + "_Link" + str(b+1))
 				a = a + 1
+
 				
-		for c in range(self.totalNum + 1):
-			if(self.sensorOrNot[c] == 0):
+		for c in range(self.numSensor):
 				for d in range(self.totalNum):
 					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + self.numSensor, weight= self.weights[c][d])
 		pyrosim.End()
@@ -266,7 +266,6 @@ class SOLUTION:
 			new_links[x] = self.links[x]
 		self.links = new_links
 		self.totalNum = self.totalNum - 1
-		print(self.links)
 
 	def Brain_Mutate(self):
 		if(self.numSensor < 2):
