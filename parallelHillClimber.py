@@ -36,7 +36,7 @@ class PARALLEL_HILL_CLIMBER:
 	def Save_Fitness_File(self):
 		matplotlib.pyplot.plot(self.fitnessVal)
 		#show plot
-		numpy.save("fitnessValues.npy", self.fitnessVal)
+		numpy.save("fitnessValues1.npy", self.fitnessVal)
 		fF = open("fitnessValues.txt", "w")
 		fF.write(str(self.fitnessVal))
 		fF.close()
@@ -89,6 +89,7 @@ class PARALLEL_HILL_CLIMBER:
 			if(self.parents[x].fitness > self.parents[best].fitness):
 				best = x
 		self.parents[best].Start_Simulation("GUI")
+		self.parents[best].Get_ID()
 
 
 

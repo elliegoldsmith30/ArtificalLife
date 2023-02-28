@@ -16,8 +16,8 @@ class SOLUTION:
 		self.loc = {}
 
 		## Number of Links
-		self.totalNum = numpy.random.randint(2,5)
-		self.totalNum = 1
+		#self.totalNum = numpy.random.randint(2,5)
+		self.totalNum = 2
 		self.links[0] = [numpy.random.rand()+ 0.1, numpy.random.rand()+ 0.1, numpy.random.rand()+ 0.1, 0,0,0,0, 0]
 		self.sensorOrNot[0] = numpy.random.randint(0,2)
 		self.weights = numpy.random.rand(self.totalNum + 1 ,self.totalNum + 1)
@@ -240,12 +240,12 @@ class SOLUTION:
 				a = a + 1
 				self.numSensor = self.numSensor + 1
 
-		for b in range(self.totalNum):
-			if(b != self.totalNum-1):
+		for b in range(self.totalNum+1):
+			if(b != self.totalNum):
 				pyrosim.Send_Motor_Neuron(name = a, jointName = "Link" + str(b) + "_Link" + str(b+1))
 				a = a + 1
 				
-		for c in range(self.numSensor):
+		for c in range(self.totalNum + 1):
 			if(self.sensorOrNot[c] == 0):
 				for d in range(self.totalNum):
 					pyrosim.Send_Synapse(sourceNeuronName= c, targetNeuronName= d + self.numSensor, weight= self.weights[c][d])
@@ -255,14 +255,18 @@ class SOLUTION:
 	def Mutate(self):
 		change = numpy.random.randint(0,2)
 		if (change == 0):
-			print("Adding block")
 			self.Add_Block()
 		else:
 			self.Brain_Mutate()
-			print("changing brain")
-	
-	def Set_ID(self, ID):
-		self.ID = ID
+		
+
+	def Delete_Block(self):
+		new_links = {}
+		for x in range(self.totalNum):
+			new_links[x] = self.links[x]
+		self.links = new_links
+		self.totalNum = self.totalNum - 1
+		print(self.links)
 
 	def Brain_Mutate(self):
 		if(self.numSensor < 2):
@@ -310,6 +314,14 @@ class SOLUTION:
 			self.links[x][5] = 1
 		else:
 			self.jointP[x-1] = "up"
+
+
+	def Set_ID(self, ID):
+		self.myID = ID
+
+	def Get_ID(self):
+		print(self.myID)
+
 
 
 ## links 
