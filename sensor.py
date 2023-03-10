@@ -8,7 +8,7 @@ class SENSOR:
 
 	def __init__(self, linkname):
 		self.linkname = linkname
-		self.values = numpy.zeros(1000)
+		self.values = numpy.zeros(5000)
 
 	def Prepare_To_Sense(self):
 		pass

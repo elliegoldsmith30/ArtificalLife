@@ -15,14 +15,14 @@ class SIMULATION:
 			physicsClient = p.connect(p.DIRECT)
 		else:
 			physicsClient = p.connect(p.GUI)
-	#	p.configureDebugVisualizer(p.COV_ENABLE_GUI,0)
+		p.configureDebugVisualizer(p.COV_ENABLE_GUI,0)
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()
 		self.robot = ROBOT(solutionID)
 
 	def Run(self):
-		for x in range(1000):
+		for x in range(5000):
 			p.stepSimulation()
 			self.robot.Sense(x)
 			self.robot.Think()
