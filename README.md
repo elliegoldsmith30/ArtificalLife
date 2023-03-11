@@ -60,4 +60,6 @@ In order to see the best robot again, the ID number of that robot is printed whe
 
 In order to run the code to produce the fitness curve, run the following command: `python3 graph.py`
 
+In order to run the simulation with different population sizes and number of generations, edit the variables `numberOfGenerations` and `populationSize` in `constants.py`.
+
 #### Citation: Instructions taken from r/ludobots and code from pyrosim is used. Northwestern CS396 - Winter 2023 (Artificial Life)
