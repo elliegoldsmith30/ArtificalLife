@@ -15,7 +15,7 @@ In order to determine which links have sensors, every time a link is generated, 
 All joints have motor neurons. All combinations of sensor neurons and motor neurons have a synapse between them. The value of the synaptic weight is determined by a random number generator for a value of -1 to 1.
 
 ## Data Storage
-Location and sizes of links and joints are stored in two dictionaries. The data from these dictionaries is randomly determined (as explained above) in the initializer of the `SOLUTION` class. Then, these dictionaries used to actually create the brains and bodies of the creature later in the code using the functions `Create_Body()` and `Create_Brain()`. 
+Location and sizes of links and joints are stored in two dictionaries. The data from these dictionaries is randomly determined (as explained above) in the initializer of the `SOLUTION` class. Then, these dictionaries are used to actually create the brains and bodies of the creature later in the code using the functions `Create_Body()` and `Create_Brain()`. 
 
 <img width="600" alt="Screen Shot 2023-03-11 at 9 15 06 AM" src="https://user-images.githubusercontent.com/92822567/224492356-7afe2e2c-5f5e-46fb-8318-3fc7db2223d1.png">
 
@@ -30,7 +30,11 @@ Each generation, the child and parent simulations are run. Fitness is determined
 <img width="400" alt="Screen Shot 2023-03-11 at 9 28 31 AM" src="https://user-images.githubusercontent.com/92822567/224493017-e2ff5cc2-ee1f-4151-86f8-72516d964e72.png">
 
 ## Results
+<img width="866" alt="Screen Shot 2023-03-11 at 10 41 52 AM" src="https://user-images.githubusercontent.com/92822567/224496649-e0b6a13c-19ee-44b2-bf3a-fbd24bebdc2f.png">
+
 I ran evolution for 500 generations with a population size of 10. Each simulation was running for 1000 time points. But, the robots with the best fitness were not demonstrating locomotion. Large robots were toppling over and ended up travelling farther than robots that walked slowly. This is because of perverse instantiation. The robots were doing what I "asked" mathematically, but not in the way in which I was intending them to. In order to fix this, I ran each simulation for 5000 time points and this completely fixed the issue. Robots that actually demonstrated proper locomotion had more time to move and ultimately, moved farther than robots that quickly fell over and stopped moving.
+
+In the end, the robots with the highest fitness were generally small (4 - 8 links each) and were able to continuously move in one direction. See below for a graph of the fitness of 10 random seeds, a ten second video showing a few random and evolved robots side by side, and a two minute summary video explaining the project and showing various evolved robots.
 
 Fitness Curves for 10 Random Seeds with Population Sizes of 10 and 500 Generations:
 
