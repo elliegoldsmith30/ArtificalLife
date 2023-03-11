@@ -22,7 +22,9 @@ Location and sizes of links and joints are stored in two dictionaries. The data 
 ## Evolution
 The robots evolve in a parallel hill climber structure. Each generation, a deep copy of the robot is generated and the child has one mutation from the parent. Evolution of each robot in a population occurs completely separetely of the other robots in the population. 
 
-<img width="600" alt="Screen Shot 2023-03-11 at 9 02 26 AM" src="https://user-images.githubusercontent.com/92822567/224491790-c958284a-3926-4351-9ac4-9631d1b57d7b.png">
+### Mutation Function
+<img width="589" alt="Screen Shot 2023-03-11 at 10 55 05 AM" src="https://user-images.githubusercontent.com/92822567/224497610-78beaead-d39c-42c7-89a1-2b70f16d6406.png">
+
 
 ### Fitness and Selection
 Each generation, the child and parent simulations are run. Fitness is determined by distance moved from the origin. Whichever robot (parent or child) has the highest fitness is selected to continue evolving.
