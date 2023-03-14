@@ -15,7 +15,7 @@ In order to determine which links have sensors, every time a link is generated, 
 All joints have motor neurons. All combinations of sensor neurons and motor neurons have a synapse between them. The value of the synaptic weight is determined by a random number generator for a value of -1 to 1.
 
 ## Data Storage
-Location and sizes of links and joints are stored in two dictionaries. The data from these dictionaries is randomly determined (as explained above) in the initializer of the `SOLUTION` class. Then, these dictionaries are used to actually create the brains and bodies of the creature later in the code using the functions `Create_Body()` and `Create_Brain()`. 
+Location and sizes of links and joints are stored in two dictionaries. The data from these dictionaries is randomly determined (as explained above) in the initializer of the `SOLUTION` class. Then, these dictionaries are used to actually create the brain and body of the creature later in the code using the functions `Create_Body()` and `Create_Brain()`. 
 
 <img width="600" alt="Screen Shot 2023-03-11 at 9 15 06 AM" src="https://user-images.githubusercontent.com/92822567/224492356-7afe2e2c-5f5e-46fb-8318-3fc7db2223d1.png">
 
